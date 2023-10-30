@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    
+    <key>Label</key>
+    <string>com.alice.DailyReportFileChg</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+      <string>/YOUR-PATH/FileChg/user-Alice/report_file_chg.sh</string>
+    </array>
+    
+    <key>RunAtLoad</key>
+    <true/>
+   
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/YOUR-PATH/FileChg/user-Alice/report_file_chg.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/YOUR-PATH/FileChg/user-Alice/report_file_chg.err</string>
+  
+  </dict>
+</plist>

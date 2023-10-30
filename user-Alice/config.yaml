@@ -1,0 +1,38 @@
+homes:
+- base: /Users/YOURNAME
+  dir: Dropbox
+
+- base: /Users/YOURNAME/Library
+  dir: Mobile Documents
+
+- base: /Users/YOURNAME
+  dir: GitHub
+
+- base: /Users/YOURNAME/Library/CloudStorage/GoogleDrive-YOURNAME@gmail.com/我的雲端硬碟
+  dir: GoogleDrive
+
+shortPaths:
+- path: Mobile Documents/iCloud~net~xmind~brownieapp/Documents
+  short: XMind
+- path: Mobile Documents/com~apple~CloudDocs/Quizlet
+  short: Quizlet
+- path: Mobile Documents/iCloud~com~fluidtouch~noteshelf
+  short: Noteshelf
+- path: Mobile Documents/com~apple~Numbers
+  short: Numbers
+- path: Mobile Documents/com~apple~CloudDocs
+  short: CloudDocs
+- path: Dropbox/CodeGitHubCount/FileChg
+  short: FileChg
+
+ignores:
+- .git 
+- __pycache__
+- .DS_Store
+- /**/ChatGptAnswerPdf/user-Count/out-*
+- /**/FileChg/output
+- /**/SmartEvernote/output/list_paper
+- /**/CodeGit/2309-TimeLogger/output
+- Downloads
+- "*.sublime-workspace"
+- "*.sublime-project"

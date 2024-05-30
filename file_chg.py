@@ -37,7 +37,7 @@ def build_args():
 '''
 
     parser = argparse.ArgumentParser(
-                description='desc')
+                description=desc)
 
     parser.add_argument(
             "-c",
@@ -56,6 +56,12 @@ def build_args():
             dest='test',
             action='store_true',
             help='Test it.')
+
+    parser.add_argument(
+            '--only-files',
+            dest='onlyFiles',
+            action='store_true',
+            help='Only files.')
 
     parser.add_argument(
             '-s',
@@ -88,17 +94,24 @@ def shorten_path(dn, shortPaths):
     return dn
 
 
-def collect_today_files(args, cfg, home, home2, today_yyyymmdd):
+def collect_today_files(args, cfg, home, today_yyyymmdd):
 
     #
     # Collect all files.
     #
 
-    dn = os.path.join(home, home2)
+    dn = os.path.join(home['base'], home['dir'])
     print('='*80)
     print('Collecting all files under:')
     print(dn)
-    fn_ls = glob.glob(dn+'/**/*', recursive=True)
+
+    if 'depth' in home:
+        pattern = '/*' * home['depth']
+        fn_ls = glob.glob(dn+pattern, recursive=True)
+    else:
+        fn_ls = glob.glob(dn+'/**/*', recursive=True)
+    
+
     print('')
     if not args.silence:
         print('There are %d files' % len(fn_ls))
@@ -108,10 +121,12 @@ def collect_today_files(args, cfg, home, home2, today_yyyymmdd):
     #
 
     if not args.silence:
-        print('Filter ignored files...')
+        print('Filtering ignored files...')
+
     fn_ls = filter_files(fn_ls, cfg['ignores'])
-    if not args.silence:
+    if not args.silence: 
         print('There are %d files after filtering' % len(fn_ls))
+
     #
     # Sort files by modified time.
     #
@@ -134,7 +149,24 @@ def collect_today_files(args, cfg, home, home2, today_yyyymmdd):
         else:
             break
 
-    #today_fn_ls = fn_ls         # for testing
+    #
+    # If --only-files, 
+    #
+
+    if args.onlyFiles:
+        if not args.silence:
+            print('Filtering directories ...')
+
+        ls = []
+        for fn in today_fn_ls:
+            if os.path.isfile(fn):
+                ls.append(fn)
+        today_fn_ls = ls
+
+        if not args.silence:
+            print('There are %d files after skipping directories' % len(today_fn_ls))            
+
+    print('There are %d files changed on %s.' % (len(today_fn_ls), today_yyyymmdd))
 
     #
     # fileStateList = [fileState]
@@ -149,11 +181,11 @@ def collect_today_files(args, cfg, home, home2, today_yyyymmdd):
         fileState['path'] = fn 
         fileState['date'] = dt.strftime('%Y%m%d')
         fileState['time'] = dt.strftime('%H:%M')
-        fileState['shortPath'] = fn[len(home)+1:]
+        fileState['shortPath'] = fn[len(home['base'])+1:]
         fileStateList.append(fileState)
 
     if not args.silence:
-        print('I updated %d files in %s today' % (len(fileStateList), home2))
+        print('I updated %d files in %s today' % (len(fileStateList), home['dir']))
     '''
     for fileState in reversed(fileStateList):
         print('%s %s' % (fileState['time'], fileState['shortPath']))
@@ -207,12 +239,12 @@ def main():
             'base': '/Users/visualge/Dropbox/CodeLearn/2023/2303-OP-TEE',
             'dir': 'images',
             }
-        collect_today_files(args, cfg, home['base'], home['dir'], today_yyyymmdd)
+        collect_today_files(args, cfg, home, today_yyyymmdd)
         print('')
 
     else:
         for home in cfg['homes']:
-            collect_today_files(args, cfg, home['base'], home['dir'], today_yyyymmdd)
+            collect_today_files(args, cfg, home, today_yyyymmdd)
             print('')
 
 if __name__ == '__main__':

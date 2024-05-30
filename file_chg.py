@@ -23,17 +23,21 @@ br = pdb.set_trace
 
 def build_args():
     desc = '''
-    Usage 1: Display file changes today.
+    Usage 1: Display changes of files and directories today.
         python file_chg.py
         
-    Usage 2: Display file changes on 2022/2/21
+    Usage 2: Display fchanges of files and directories on 2022/2/21
         python file_chg.py --ymd 20220221
     
-    Usage 3: Display file changes today in silience mode.
+    Usage 3: Display changes of files and directories today in silience mode.
         python file_chg.py -s
     
-    Usage 4: Display file changes today by a given YAML config.
+    Usage 4: Display changes of files and directories today by a given YAML config.
         python file_chg.py -c config-YOUR-NAME.yaml
+
+    Usage 5: Display changes of only files.
+        python file_chg.py --only-files
+
 '''
 
     parser = argparse.ArgumentParser(

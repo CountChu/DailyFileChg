@@ -7,6 +7,7 @@ homes:
 
 - base: /Users/YOURNAME
   dir: GitHub
+  depth: 2                              # Only display changes of files and directories to depth 2.  
 
 - base: /Users/YOURNAME/Library/CloudStorage/GoogleDrive-YOURNAME@gmail.com/我的雲端硬碟
   dir: GoogleDrive
